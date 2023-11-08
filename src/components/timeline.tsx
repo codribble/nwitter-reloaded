@@ -1,6 +1,6 @@
 import {
   collection,
-  getDocs,
+  // getDocs,
   limit,
   onSnapshot,
   orderBy,
@@ -22,9 +22,13 @@ export interface ITweet {
 }
 
 const Wrapper = styled.div`
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export default function Timeline() {
