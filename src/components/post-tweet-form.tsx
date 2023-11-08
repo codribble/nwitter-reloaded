@@ -48,10 +48,10 @@ const AttachFileInput = styled.input`
 const SubmitBtn = styled.input`
   padding: 10px 0px;
   background-color: #1d9bf0;
-  color: white;
   border: none;
   border-radius: 20px;
   font-size: 16px;
+  color: white;
   cursor: pointer;
   &:hover,
   &:active {
