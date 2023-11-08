@@ -3,7 +3,7 @@ import PostTweetForm from "../components/post-tweet-form";
 import Timeline from "../components/timeline";
 
 const Wrapper = styled.div`
-  overflow-y: scroll;
+  overflow-y: auto;
   display: grid;
   grid-template-rows: 1fr 5fr;
   gap: 50px;
