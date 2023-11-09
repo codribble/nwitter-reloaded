@@ -37,16 +37,14 @@ const Logo = styled.img`
 export default function SocialAuth() {
   const navigate = useNavigate();
   const platform = ["github", "google"];
-  const onClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onSocialClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const { value } = e.currentTarget;
+    const { name } = e.currentTarget;
 
     try {
       const provider =
-        value === "github"
-          ? new GithubAuthProvider()
-          : new GoogleAuthProvider();
+        name === "github" ? new GithubAuthProvider() : new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
       navigate("/");
     } catch (error) {
@@ -59,8 +57,8 @@ export default function SocialAuth() {
       {platform.map((v) => (
         <Button
           key={v}
-          value={v}
-          onClick={onClick}
+          name={v}
+          onClick={onSocialClick}
         >
           <Logo src={`${v}-logo.svg`} />
           Continue with {v}
