@@ -13,7 +13,7 @@ import {
   id: string;
   photo?: string;
   tweet: string;
-  setIsEditingFunc: boolean;
+  setIsEditing: () => boolean;
 } */
 
 const Form = styled.form`
@@ -71,7 +71,7 @@ const SubmitBtn = styled.input`
   }
 `;
 
-export default function EditTweetForm({ photo, tweet, id, setIsEditingFunc }) {
+export default function EditTweetForm({ photo, tweet, id, setIsEditing }) {
   const [isLoading, setIsLoading] = useState(false);
   const [editTweet, setEditTweet] = useState(tweet);
   const [editFile, setEditFile] = useState<File | null>(null);
@@ -126,7 +126,7 @@ export default function EditTweetForm({ photo, tweet, id, setIsEditingFunc }) {
       }
       setEditTweet("");
       setEditFile(null);
-      setIsEditingFunc(false);
+      setIsEditing(false);
     } catch (e) {
       console.log(e);
     } finally {
