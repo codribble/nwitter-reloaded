@@ -11,7 +11,8 @@ import {
   Title,
   Wrapper,
 } from "../components/auth-components";
-import GithubButton from "../components/github-btn";
+// import GithubButton from "../components/github-btn";
+import SocialAuth from "../components/social-auth";
 
 export default function CreateAccount() {
   const navigate = useNavigate();
@@ -102,7 +103,8 @@ export default function CreateAccount() {
       <Switcher>
         Forgot password? <Link to="/forgot-password">Send mail &rarr;</Link>
       </Switcher>
-      <GithubButton />
+
+      <SocialAuth />
     </Wrapper>
   );
 }
