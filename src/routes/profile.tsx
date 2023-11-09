@@ -54,10 +54,45 @@ const Tweets = styled.div`
   gap: 10px;
 `;
 
+const EditButton = styled.button`
+  padding: 5px 10px;
+  background-color: #1d9bf0;
+  border: 0;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 12px;
+  color: white;
+  text-transform: uppercase;
+  cursor: pointer;
+`;
+
+const Form = styled.form`
+  display: flex;
+  align-items: center;
+`;
+
+const Input = styled.input`
+  height: 100%;
+`;
+
+const SaveButton = styled.button`
+  padding: 5px 10px;
+  background-color: #1d9bf0;
+  border: 0;
+  font-weight: 600;
+  font-size: 12px;
+  color: white;
+  text-transform: uppercase;
+  cursor: pointer;
+`;
+
 export default function Profile() {
   const user = auth.currentUser;
   const [avatar, setAvatar] = useState(user?.photoURL);
   const [tweets, setTweets] = useState<ITweet[]>([]);
+  const [isSaving, setIsSaving] = useState(false);
+  const [editName, setEditName] = useState(user?.displayName ?? "Anonymous");
+  const [isEditing, setIsEditing] = useState(false);
   const onAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
 
@@ -100,6 +135,34 @@ export default function Profile() {
     fetchTweets();
   }, []);
 
+  const onNameChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setEditName(e.target.value);
+  const onClick = () => {
+    setIsEditing((prev) => !prev);
+
+    if (isEditing) {
+      setEditName(user?.displayName ?? "Anonymous");
+    }
+  };
+
+  const onNameSave = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!user) return;
+
+    setIsSaving(true);
+
+    try {
+      await updateProfile(user, {
+        displayName: editName,
+      });
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setIsSaving(false);
+      setIsEditing(false);
+    }
+  };
+
   return (
     <Wrapper>
       <AvatarUpload htmlFor="avatar">
@@ -122,7 +185,24 @@ export default function Profile() {
         type="file"
         accept="image/*"
       />
-      <Name>{user?.displayName ?? "Anonymous"}</Name>
+
+      {isEditing ? (
+        <Form onSubmit={onNameSave}>
+          <Input
+            type="text"
+            onChange={onNameChange}
+            value={editName}
+          />
+          <SaveButton type="submit">
+            {isSaving ? "Saving.." : "Save"}
+          </SaveButton>
+        </Form>
+      ) : (
+        <Name>{user?.displayName ?? "Anonymous"}</Name>
+      )}
+      <EditButton onClick={onClick}>
+        {isEditing ? "Cancel" : "Edit name"}
+      </EditButton>
 
       <Tweets>
         {tweets.map((tweet) => (
