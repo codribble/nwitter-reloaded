@@ -47,14 +47,14 @@ export default function Layout() {
 
     if (ok) {
       await auth.signOut();
-      navigate("/login");
+      navigate("/create-account");
     }
   };
 
   return (
     <Wrapper>
       <Menu>
-        <Link to="/">
+        <Link to="/home">
           <MenuItem>
             <svg
               xmlns="http://www.w3.org/2000/svg"

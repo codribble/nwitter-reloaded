@@ -1,8 +1,17 @@
 import { sendPasswordResetEmail } from "firebase/auth";
-import { Form, Input, Title, Wrapper } from "./auth-components";
+import {
+  Desc,
+  Form,
+  HalfBox,
+  Inner,
+  Input,
+  Title,
+  Wrapper,
+} from "./auth-components";
 import { useState } from "react";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
+import XLogo from "./logo";
 
 export default function ForgotPassword() {
   const navigate = useNavigate();
@@ -25,20 +34,31 @@ export default function ForgotPassword() {
 
   return (
     <Wrapper>
-      <Title>Forgot Password</Title>
-      <Form onSubmit={onSubmit}>
-        <Input
-          onChange={onChange}
-          name="email"
-          placeholder="Email"
-          type="email"
-          required
-        />
-        <Input
-          type="submit"
-          value="Send mail"
-        />
-      </Form>
+      <HalfBox>
+        <Inner>
+          <Title className="nomargin">내 X 계정 찾기</Title>
+          <Desc>
+            비밀번호를 변경하려면 계정에 연결된 이메일을 입력해주세요.
+          </Desc>
+          <Form onSubmit={onSubmit}>
+            <Input
+              onChange={onChange}
+              name="email"
+              placeholder="이메일"
+              type="email"
+              required
+            />
+            <Input
+              type="submit"
+              value="발송"
+            />
+          </Form>
+        </Inner>
+      </HalfBox>
+
+      <HalfBox>
+        <XLogo />
+      </HalfBox>
     </Wrapper>
   );
 }

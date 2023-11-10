@@ -4,15 +4,21 @@ import { auth } from "../firebase";
 import { Link, useNavigate } from "react-router-dom";
 import { FirebaseError } from "firebase/app";
 import {
+  Divide,
   Error,
   Form,
+  HalfBox,
+  Inner,
   Input,
+  Slogan,
+  SubTitle,
   Switcher,
   Title,
   Wrapper,
 } from "../components/auth-components";
 // import GithubButton from "../components/github-btn";
 import SocialAuth from "../components/social-auth";
+import XLogo from "../components/logo";
 
 export default function CreateAccount() {
   const navigate = useNavigate();
@@ -52,7 +58,7 @@ export default function CreateAccount() {
       await updateProfile(credentials.user, {
         displayName: name,
       });
-      navigate("/");
+      navigate("/home");
     } catch (e) {
       // setError
       if (e instanceof FirebaseError) {
@@ -65,46 +71,57 @@ export default function CreateAccount() {
 
   return (
     <Wrapper>
-      <Title>Join X</Title>
-      <Form onSubmit={onSubmit}>
-        <Input
-          onChange={onChange}
-          name="name"
-          value={name}
-          placeholder="Name"
-          type="text"
-          required
-        />
-        <Input
-          onChange={onChange}
-          name="email"
-          value={email}
-          placeholder="Email"
-          type="email"
-          required
-        />
-        <Input
-          onChange={onChange}
-          name="password"
-          value={password}
-          placeholder="Password"
-          type="password"
-          required
-        />
-        <Input
-          type="submit"
-          value={isLoading ? "Loading..." : "Create Account"}
-        />
-      </Form>
-      {error !== "" ? <Error>{error}</Error> : null}
-      <Switcher>
-        Already have an account? <Link to="/login">Log in &rarr;</Link>
-      </Switcher>
-      <Switcher>
-        Forgot password? <Link to="/forgot-password">Send mail &rarr;</Link>
-      </Switcher>
+      <HalfBox>
+        <Inner>
+          <Slogan>지금 일어나고 있는 일</Slogan>
+          <Title>지금 가입하세요.</Title>
 
-      <SocialAuth />
+          <SocialAuth page="register" />
+
+          <Divide>
+            <span>또는</span>
+          </Divide>
+
+          <Form onSubmit={onSubmit}>
+            <Input
+              onChange={onChange}
+              name="name"
+              value={name}
+              placeholder="이름"
+              type="text"
+              required
+            />
+            <Input
+              onChange={onChange}
+              name="email"
+              value={email}
+              placeholder="이메일"
+              type="email"
+              required
+            />
+            <Input
+              onChange={onChange}
+              name="password"
+              value={password}
+              placeholder="비밀번호"
+              type="password"
+              required
+            />
+            <Input
+              type="submit"
+              value={isLoading ? "계정 생성중..." : "계정 만들기"}
+            />
+          </Form>
+          {error !== "" ? <Error>{error}</Error> : null}
+          <Switcher>
+            <SubTitle>이미 트위터에 가입하셨나요?</SubTitle>
+            <Link to="/login">로그인</Link>
+          </Switcher>
+        </Inner>
+      </HalfBox>
+      <HalfBox>
+        <XLogo />
+      </HalfBox>
     </Wrapper>
   );
 }

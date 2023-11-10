@@ -1,21 +1,26 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FirebaseError } from "firebase/app";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import {
+  Divide,
   Error,
+  ForgotPasswordBtn,
   Form,
+  HalfBox,
+  Inner,
   Input,
   Switcher,
   Title,
   Wrapper,
 } from "../components/auth-components";
 import SocialAuth from "../components/social-auth";
+import XLogo from "../components/logo";
 // import GithubButton from "../components/github-btn";
 // import GoogleButton from "../components/google-btn";
 
-export default function CreateAccount() {
+export default function Login() {
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -43,7 +48,7 @@ export default function CreateAccount() {
       // redirect to the home page
       setLoading(true);
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/");
+      navigate("/home");
     } catch (e) {
       // setError
       if (e instanceof FirebaseError) {
@@ -53,42 +58,59 @@ export default function CreateAccount() {
       setLoading(false);
     }
   };
+  const onForgotPassword = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    navigate("/forgot-password");
+  };
 
   return (
     <Wrapper>
-      <Title>Log into X</Title>
-      <Form onSubmit={onSubmit}>
-        <Input
-          onChange={onChange}
-          name="email"
-          value={email}
-          placeholder="Email"
-          type="email"
-          required
-        />
-        <Input
-          onChange={onChange}
-          name="password"
-          value={password}
-          placeholder="Password"
-          type="password"
-          required
-        />
-        <Input
-          type="submit"
-          value={isLoading ? "Loading..." : "Log in"}
-        />
-      </Form>
-      {error !== "" ? <Error>{error}</Error> : null}
-      <Switcher>
-        Don't have an account?{" "}
-        <Link to="/create-account">Create one &rarr;</Link>
-      </Switcher>
-      <Switcher>
-        Forgot password? <Link to="/forgot-password">Send mail &rarr;</Link>
-      </Switcher>
+      <HalfBox>
+        <Inner>
+          <Title>X 가입하기</Title>
 
-      <SocialAuth />
+          <SocialAuth page="login" />
+
+          <Divide>
+            <span>또는</span>
+          </Divide>
+
+          <Form onSubmit={onSubmit}>
+            <Input
+              onChange={onChange}
+              name="email"
+              value={email}
+              placeholder="이메일"
+              type="email"
+              required
+            />
+            <Input
+              onChange={onChange}
+              name="password"
+              value={password}
+              placeholder="비밀번호"
+              type="password"
+              required
+            />
+            <Input
+              type="submit"
+              value={isLoading ? "로그인중..." : "로그인"}
+            />
+          </Form>
+          {error !== "" ? <Error>{error}</Error> : null}
+
+          <Switcher>
+            <ForgotPasswordBtn onClick={onForgotPassword}>
+              비밀번호를 잊으셨나요?
+            </ForgotPasswordBtn>
+          </Switcher>
+        </Inner>
+      </HalfBox>
+
+      <HalfBox>
+        <XLogo />
+      </HalfBox>
     </Wrapper>
   );
 }

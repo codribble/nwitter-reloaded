@@ -7,12 +7,15 @@ import styled from "styled-components";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
+export interface PageSet {
+  page: string;
+}
+
 const SocialBox = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
   width: 100%;
-  margin-top: 50px;
 `;
 
 const Button = styled.button`
@@ -21,6 +24,7 @@ const Button = styled.button`
   justify-content: center;
   gap: 5px;
   width: 100%;
+  max-width: 300px;
   padding: 10px 20px;
   background-color: white;
   border-radius: 50px;
@@ -31,12 +35,12 @@ const Button = styled.button`
 `;
 
 const Logo = styled.img`
-  height: 25px;
+  height: 18px;
 `;
 
-export default function SocialAuth() {
+export default function SocialAuth({ page }: PageSet) {
   const navigate = useNavigate();
-  const platform = ["github", "google"];
+  const platform = ["google", "github"];
   const onSocialClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -46,7 +50,7 @@ export default function SocialAuth() {
       const provider =
         name === "github" ? new GithubAuthProvider() : new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
-      navigate("/");
+      navigate("/home");
     } catch (error) {
       console.error(error);
     }
@@ -61,7 +65,8 @@ export default function SocialAuth() {
           onClick={onSocialClick}
         >
           <Logo src={`${v}-logo.svg`} />
-          Continue with {v}
+          {v.charAt(0).toUpperCase() + v.slice(1)} 계정으로{" "}
+          {page === "login" ? "로그인" : "가입하기"}
         </Button>
       ))}
     </SocialBox>

@@ -9,7 +9,7 @@ export default function ProtectedRoute({
   const user = auth.currentUser;
   if (user === null) {
     // !user
-    return <Navigate to="/login" />;
+    return <Navigate to="/create-account" />;
   }
   return children;
 }
