@@ -3867,6 +3867,7 @@ This typically indicates that your device does not have a healthy Internet conne
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   width: 80px;
   height: 80px;
   background-color: #1d9bf0;
@@ -3876,7 +3877,15 @@ This typically indicates that your device does not have a healthy Internet conne
     width: 50px;
   }
 `,wF=z.img`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: auto;
+  min-height: auto;
   width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
 `,EF=z.input`
   display: none;
 `,TF=z.span`
