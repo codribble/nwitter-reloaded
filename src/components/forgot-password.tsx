@@ -31,11 +31,9 @@ export default function ForgotPassword() {
 
     try {
       await sendPasswordResetEmail(auth, email);
-      navigate("/");
+      navigate("/login");
     } catch (error) {
       console.log(error.code);
-    } finally {
-      //
     }
   };
 
