@@ -109,9 +109,9 @@ export default function Tweet({ userId, username, photo, tweet, id }: ITweet) {
         )}
         {user?.uid === userId ? (
           <BtnWrap>
-            <DeleteButton onClick={onDelete}>Delete</DeleteButton>
+            <DeleteButton onClick={onDelete}>삭제</DeleteButton>
             <EditButton onClick={onEdit}>
-              {isEditing ? "Cancel" : "Edit"}
+              {isEditing ? "취소" : "수정"}
             </EditButton>
           </BtnWrap>
         ) : null}

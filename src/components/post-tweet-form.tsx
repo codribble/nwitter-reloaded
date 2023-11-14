@@ -70,7 +70,7 @@ export default function PostTweetForm() {
     const { files } = e.target;
 
     if (files && files.length === 1) {
-      if (files[0].size > 1000000) {
+      if (files[0].size > 1024 * 1024) {
         alert("oooops! too much size!!");
         return;
       }
@@ -118,7 +118,7 @@ export default function PostTweetForm() {
         placeholder="What is happening?!"
       />
       <AttachFileButton htmlFor="file">
-        {file ? "Photo added ✅" : "Add photo"}
+        {file ? "첨부완료 ✅" : "이미지 첨부"}
       </AttachFileButton>
       <AttachFileInput
         onChange={onFileChange}
@@ -128,7 +128,7 @@ export default function PostTweetForm() {
       />
       <SubmitBtn
         type="submit"
-        value={isLoading ? "Posting..." : "Post Tweet"}
+        value={isLoading ? "업로드중..." : "올리기"}
       />
     </Form>
   );

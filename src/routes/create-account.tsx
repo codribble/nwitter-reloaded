@@ -10,10 +10,10 @@ import {
   HalfBox,
   Inner,
   Input,
-  Slogan,
+  // Slogan,
   SubTitle,
   Switcher,
-  Title,
+  // Title,
   Wrapper,
 } from "../components/auth-components";
 // import GithubButton from "../components/github-btn";
@@ -73,8 +73,8 @@ export default function CreateAccount() {
     <Wrapper>
       <HalfBox>
         <Inner>
-          <Slogan>지금 일어나고 있는 일</Slogan>
-          <Title>지금 가입하세요.</Title>
+          {/* <Slogan>지금 일어나고 있는 일</Slogan> */}
+          {/* <Title>지금 가입하세요.</Title> */}
 
           <SocialAuth page="register" />
 
@@ -114,7 +114,7 @@ export default function CreateAccount() {
           </Form>
           {error !== "" ? <Error>{error}</Error> : null}
           <Switcher>
-            <SubTitle>이미 트위터에 가입하셨나요?</SubTitle>
+            <SubTitle>이미 가입하셨나요?</SubTitle>
             <Link to="/login">로그인</Link>
           </Switcher>
         </Inner>

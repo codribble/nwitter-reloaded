@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 import { ITweet } from "../components/timeline";
 import Tweet from "../components/tweet";
+// import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -26,6 +27,7 @@ const AvatarUpload = styled.label`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   width: 80px;
   height: 80px;
   background-color: #1d9bf0;
@@ -37,7 +39,15 @@ const AvatarUpload = styled.label`
 `;
 
 const AvatarImg = styled.img`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: auto;
+  min-height: auto;
   width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
 `;
 
 const AvatarInput = styled.input`
@@ -87,8 +97,21 @@ const SaveButton = styled.button`
   cursor: pointer;
 `;
 
+/* const DeleteButton = styled.button`
+  padding: 5px 10px;
+  background-color: #666;
+  border: 0;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 12px;
+  color: white;
+  text-transform: uppercase;
+  cursor: pointer;
+`; */
+
 export default function Profile() {
   const user = auth.currentUser;
+  // const navigate = useNavigate();
   const [avatar, setAvatar] = useState(user?.photoURL);
   const [tweets, setTweets] = useState<ITweet[]>([]);
   const [isSaving, setIsSaving] = useState(false);
@@ -101,6 +124,10 @@ export default function Profile() {
       const file = files[0];
 
       if (!user) return;
+      if (files[0].size > 1024 * 1024) {
+        alert("oooops! too much size!!");
+        return;
+      }
 
       if (file) {
         const locationRef = ref(storage, `avatars/${user?.uid}`);
@@ -164,6 +191,20 @@ export default function Profile() {
     }
   };
 
+  // const onDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  //   e.preventDefault();
+
+  //   return;
+
+  //   try {
+  //     navigate("/");
+  //   } catch (error) {
+  //     console.log(error.code);
+  //   } finally {
+  //     //
+  //   }
+  // };
+
   return (
     <Wrapper>
       <AvatarUpload htmlFor="avatar">
@@ -193,17 +234,19 @@ export default function Profile() {
             type="text"
             onChange={onNameChange}
             value={editName}
+            placeholder="이름"
           />
           <SaveButton type="submit">
-            {isSaving ? "Saving.." : "Save"}
+            {isSaving ? "저장중..." : "저장"}
           </SaveButton>
         </Form>
       ) : (
         <Name>{user?.displayName ?? "Anonymous"}</Name>
       )}
-      <EditButton onClick={onClick}>
-        {isEditing ? "Cancel" : "Edit name"}
-      </EditButton>
+      <>
+        <EditButton onClick={onClick}>{isEditing ? "취소" : "수정"}</EditButton>
+        {/* <DeleteButton onClick={onDelete}>탈퇴</DeleteButton> */}
+      </>
 
       <Tweets>
         {tweets.map((tweet) => (

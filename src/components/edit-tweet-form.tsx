@@ -90,7 +90,7 @@ export default function EditTweetForm({
     const { files } = e.target;
 
     if (files && files.length === 1) {
-      if (files[0].size > 1000000) {
+      if (files[0].size > 1024 * 1024) {
         alert("oooops! too much size!!");
         return;
       }

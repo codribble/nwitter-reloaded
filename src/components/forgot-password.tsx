@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import XLogo from "./logo";
 
 export default function ForgotPassword() {
+  // const user = auth.currentUser;
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,15 +29,25 @@ export default function ForgotPassword() {
     e.preventDefault();
     if (email === "") return;
 
-    await sendPasswordResetEmail(auth, email);
-    navigate("/");
+    try {
+      await sendPasswordResetEmail(auth, email);
+      navigate("/");
+    } catch (error) {
+      console.log(error.code);
+    } finally {
+      //
+    }
   };
+
+  /* useEffect(() => {
+    if (user) navigate("/");
+  }, []); */
 
   return (
     <Wrapper>
       <HalfBox>
         <Inner>
-          <Title className="nomargin">내 X 계정 찾기</Title>
+          <Title className="nomargin">내 계정 찾기</Title>
           <Desc>
             비밀번호를 변경하려면 계정에 연결된 이메일을 입력해주세요.
           </Desc>

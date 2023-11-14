@@ -12,7 +12,7 @@ import {
   Inner,
   Input,
   Switcher,
-  Title,
+  // Title,
   Wrapper,
 } from "../components/auth-components";
 import SocialAuth from "../components/social-auth";
@@ -48,7 +48,7 @@ export default function Login() {
       // redirect to the home page
       setLoading(true);
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/home");
+      navigate("/");
     } catch (e) {
       // setError
       if (e instanceof FirebaseError) {
@@ -68,7 +68,7 @@ export default function Login() {
     <Wrapper>
       <HalfBox>
         <Inner>
-          <Title>X 가입하기</Title>
+          {/* <Title>가입하기</Title> */}
 
           <SocialAuth page="login" />
 
